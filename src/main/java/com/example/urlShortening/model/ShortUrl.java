@@ -26,4 +26,8 @@ public class ShortUrl {
         this.accessCount = 0L;
     }
 
+    public void incrementAccessCount() {
+        this.accessCount++;
+    }
+
 }
