@@ -43,11 +43,11 @@ public class ShortUrlService {
     }
 
     // Update the original URL of an existing short URL entry
-    public ShortUrl updateShortUrl(String code,String originalUrl){
+    public ShortUrl updateShortUrl(String code,String newUrl){
         Optional<ShortUrl> shortUrl= shortUrlRepository.findByCode(code);
         if(shortUrl.isPresent()){
             ShortUrl prevUrl = shortUrl.get();
-            prevUrl.setOriginalUrl(originalUrl);
+            prevUrl.setOriginalUrl(newUrl);
             return shortUrlRepository.save(prevUrl);
         }
         return null;

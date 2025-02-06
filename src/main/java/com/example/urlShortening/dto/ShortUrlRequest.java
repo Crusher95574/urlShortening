@@ -1,2 +1,13 @@
-package com.example.urlShortening.DTO;public class ShortUrlRequest {
+package com.example.urlShortening.dto;
+
+public class ShortUrlRequest {
+    private String originalUrl;
+
+    public String getOriginalUrl() {
+        return originalUrl;
+    }
+
+    public void setOriginalUrl(String originalUrl) {
+        this.originalUrl = originalUrl;
+    }
 }
