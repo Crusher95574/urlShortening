@@ -26,15 +26,14 @@ public class ShortUrlService {
     }
 
     // Create a new Short Url
-    public ShortUrl createShortUrl(String OrignalUrl){
+    public ShortUrl createShortUrl(String originalUrl) {
         String code = generateCode();
-
-        //Checking the code is present in database or not ensuring uniqueness
-        while(shortUrlRepository.findByCode(code).isPresent()){
-            code=generateCode();
+        // Ensure the code is unique.
+        while (shortUrlRepository.findByCode(code).isPresent()) {
+            code = generateCode();
         }
-        ShortUrl shortUrl=new ShortUrl(code,OrignalUrl);
-        return shortUrl;
+        ShortUrl shortUrl = new ShortUrl(code, originalUrl);
+        return shortUrlRepository.save(shortUrl); // This call should persist and assign an id.
     }
 
     // Retrieve a short URL entry by code
