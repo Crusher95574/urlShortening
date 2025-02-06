@@ -3,6 +3,7 @@ package com.example.urlShortening.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -11,13 +12,14 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(org.springframework.security.config.annotation.web.builders.HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Disable CSRF protection for the API
                 .csrf(csrf -> csrf.disable())
-                // Allow all requests without authentication
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
-
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/urls/**","/h2-console/**").permitAll()
+                        .anyRequest().authenticated()
+                );
         return http.build();
     }
 }

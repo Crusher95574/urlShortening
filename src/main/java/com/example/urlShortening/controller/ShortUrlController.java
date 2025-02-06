@@ -36,8 +36,9 @@ public class ShortUrlController {
 
     // Update the original URL for an existing short URL
     @PutMapping("/{code}")
-    public ResponseEntity<ShortUrl> updateShortUrl(@PathVariable String code,@RequestBody String newUrl){
-        ShortUrl updateShortUrl = service.updateShortUrl(code, newUrl);
+    public ResponseEntity<ShortUrl> updateShortUrl(@PathVariable String code,@RequestBody  ShortUrlRequest newUrl){
+        String url = newUrl.getOriginalUrl();
+        ShortUrl updateShortUrl = service.updateShortUrl(code, url);
         if (updateShortUrl == null) {
             return ResponseEntity.notFound().build();
         }
