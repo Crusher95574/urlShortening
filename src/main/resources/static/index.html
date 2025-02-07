@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Shortener</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        input { padding: 0.5em; font-size: 1em; }
+        button { padding: 0.5em 1em; font-size: 1em; }
+        #result { margin-top: 1em; }
+    </style>
+</head>
+<body>
+<h1>URL Shortener</h1>
+<form id="urlForm">
+    <input type="text" id="originalUrl" placeholder="Enter original URL" size="50" required/>
+    <button type="submit">Shorten</button>
+</form>
+<div id="result"></div>
+
+<script>
+    document.getElementById('urlForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const originalUrl = document.getElementById('originalUrl').value;
+        // Send the original URL as a JSON object instead of a raw string
+        fetch('http://localhost:8083/api/urls', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ originalUrl: originalUrl })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <p>Your short URL is:
+                    <a href="/api/urls/r/${data.code}" target="_blank">
+                        /api/urls/r/${data.code}
+                    </a>
+                </p>
+                <p>Access Count: ${data.accessCount}</p>
+            `;
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            document.getElementById('result').textContent = "Error creating short URL.";
+        });
+    });
+</script>
+</body>
+</html>
+
