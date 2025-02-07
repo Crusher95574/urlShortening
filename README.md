@@ -1,1 +1,1 @@
-This is an urlShortening app
+This is an urlShortening application
