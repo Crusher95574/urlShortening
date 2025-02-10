@@ -51,8 +51,26 @@ Permit access to static resources (HTML, CSS, JS, etc.).
 Enable CORS for specific origins.
 The security configuration is defined in SecurityConfig.java.
 
-6. Build the Application:
+6. Deployment
+Deploying to Google Cloud App Engine
+Create an App Engine Application:
+
+Log into the GCP Console.
+Create a new project or select an existing one.
+Enable App Engine for your project and choose a region (for India, you might use asia-south1).
+Configure the Production Environment:
+Ensure your application-prod.properties is properly set up for PostgreSQL (Aiven).
+
+Create an app.yaml File
+
+7. Build the Application:
    mvn clean package
+
+8. Deploy to App Engine:
+gcloud app deploy
+Ensure your active project is set with:
+gcloud config set project YOUR_PROJECT_ID
+   
 
 7. API Endpoints
 Some key endpoints include:
